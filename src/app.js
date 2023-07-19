@@ -11,7 +11,6 @@ import { ProfilePage } from "./pages/profile-page";
 import { ProtectedPage } from "./pages/protected-page";
 import { PublicPage } from "./pages/public-page";
 import { PetsPage } from "./pages/pets-page";
-import { UsersPage } from "./pages/users-page";
 
 export const App = () => {
   const { isLoading } = useAuth0();
@@ -36,10 +35,6 @@ export const App = () => {
       <Route
         path="/protected"
         element={<AuthenticationGuard component={ProtectedPage} />}
-      />
-      <Route
-        path="/users"
-        element={<AuthenticationGuard component={UsersPage} />}
       />
       <Route
         path="/admin"

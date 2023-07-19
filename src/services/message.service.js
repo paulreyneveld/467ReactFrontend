@@ -36,12 +36,13 @@ export const getPetsResource = async () => {
   };
 };
 
-export const getProtectedResource = async () => {
+export const getProtectedResource = async (accessToken) => {
   const config = {
-    url: `${apiServerUrl}/api/messages/protected`,
+    url: `${apiServerUrl}/pets/protected`,
     method: "GET",
     headers: {
       "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 
