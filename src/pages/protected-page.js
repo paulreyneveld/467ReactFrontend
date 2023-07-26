@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CodeSnippet } from "../components/code-snippet";
-import { PageLayout } from "../components/page-layout";
 import { getProtectedResource } from "../services/message.service";
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -36,7 +34,6 @@ export const ProtectedPage = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <PageLayout>
       <div className="content-layout">
         <h1 id="page-title" className="content__title">
           Protected Page
@@ -51,9 +48,7 @@ export const ProtectedPage = () => {
               <strong>Only authenticated users can access this page.</strong>
             </span>
           </p>
-          <CodeSnippet title="Protected Message" code={message} />
         </div>
       </div>
-    </PageLayout>
   );
 };

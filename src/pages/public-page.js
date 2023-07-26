@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CodeSnippet } from "../components/code-snippet";
-import { PageLayout } from "../components/page-layout";
 import { getPublicResource } from "../services/message.service";
 
 export const PublicPage = () => {
@@ -33,7 +31,6 @@ export const PublicPage = () => {
   }, []);
 
   return (
-    <PageLayout>
       <div className="content-layout">
         <h1 id="page-title" className="content__title">
           Public Page
@@ -48,9 +45,7 @@ export const PublicPage = () => {
               <strong>Any visitor can access this page.</strong>
             </span>
           </p>
-          <CodeSnippet title="Public Message" code={message} />
         </div>
       </div>
-    </PageLayout>
   );
 };

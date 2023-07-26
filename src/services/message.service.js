@@ -54,22 +54,6 @@ export const getProtectedResource = async (accessToken) => {
   };
 };
 
-// export const getUsersResource = async () => {
-//   const config = {
-//     method: 'GET',
-//     url: 'https://467petadoption.us.auth0.com/api/v2/users',
-//     params: {q: 'email:"jane@exampleco.com"', search_engine: 'v3'},
-//     headers: {authorization: 'Bearer {yourMgmtApiAccessToken}'}
-//   };
-
-//   const { data, error } = await callExternalApi({ config });
-
-//   return {
-//     data: data || null,
-//     error,
-//   };
-// };
-
 export const getUsersResource = async (accessToken) => {
   const config = {
     url: `https://pet-adoption467.us.auth0.com/userinfo`,

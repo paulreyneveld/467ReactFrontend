@@ -5,12 +5,13 @@ import { PageLoader } from "./components/page-loader";
 import { AuthenticationGuard } from "./components/authentication-guard";
 import { AdminPage } from "./pages/admin-page";
 import { CallbackPage } from "./pages/callback-page";
-import { HomePage } from "./pages/home-page";
-import { NotFoundPage } from "./pages/not-found-page";
-import { ProfilePage } from "./pages/profile-page";
+import { Home } from "./pages/Home";
+import { Profile } from "./pages/Profile";
 import { ProtectedPage } from "./pages/protected-page";
 import { PublicPage } from "./pages/public-page";
 import { PetsPage } from "./pages/pets-page";
+import { CssBaseline, Container } from "@mui/material";
+import { Navbar } from "./components/Navbar";
 
 export const App = () => {
   const { isLoading } = useAuth0();
@@ -24,11 +25,13 @@ export const App = () => {
   }
 
   return (
+    <CssBaseline>
+    <Container>
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Home />} />
       <Route
         path="/profile"
-        element={<AuthenticationGuard component={ProfilePage} />}
+        element={<AuthenticationGuard component={Profile} />}
       />
       <Route path="/public" element={<PublicPage />} />
       <Route path="/pets" element={<PetsPage />} />
@@ -41,7 +44,9 @@ export const App = () => {
         element={<AuthenticationGuard component={AdminPage} />}
       />
       <Route path="/callback" element={<CallbackPage />} />
-      <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    </Container>
+    </CssBaseline>
+    
   );
 };

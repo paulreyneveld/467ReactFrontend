@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CodeSnippet } from "../components/code-snippet";
-import { PageLayout } from "../components/page-layout";
 import { getPetsResource } from "../services/message.service";
 
 export const PetsPage = () => {
@@ -33,7 +31,6 @@ export const PetsPage = () => {
   }, []);
 
   return (
-    <PageLayout>
       <div className="content-layout">
         <h1 id="page-title" className="content__title">
           Pets Page
@@ -48,9 +45,7 @@ export const PetsPage = () => {
               <strong>Only registered visitors can access this page.</strong>
             </span>
           </p>
-          <CodeSnippet title="Public Message" code={message} />
         </div>
       </div>
-    </PageLayout>
   );
 };

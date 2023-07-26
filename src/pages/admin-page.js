@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CodeSnippet } from "../components/code-snippet";
-import { PageLayout } from "../components/page-layout";
 import { getAdminResource } from "../services/message.service";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -36,7 +34,6 @@ export const AdminPage = () => {
   }, [getAccessTokenSilently]);
 
   return (
-    <PageLayout>
       <div className="content-layout">
         <h1 id="page-title" className="content__title">
           Admin Page
@@ -55,9 +52,8 @@ export const AdminPage = () => {
               </strong>
             </span>
           </p>
-          <CodeSnippet title="Admin Message" code={message} />
+          {message}
         </div>
       </div>
-    </PageLayout>
   );
 };
