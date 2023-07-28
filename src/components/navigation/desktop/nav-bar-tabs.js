@@ -10,6 +10,7 @@ export const NavBarTabs = () => {
   if (user?.role === "user") {
     return (
       <div className="nav-bar__tabs">
+      <NavBarTab path="/" label="Home" />  
       <NavBarTab path="/public" label="Public" />
       <NavBarTab path="/protected" label="Protected" />  
       <NavBarTab path="/pets" label="Pets" />
@@ -20,18 +21,22 @@ export const NavBarTabs = () => {
   else if (user?.role === "admin") {
     return (
       <div className="nav-bar__tabs">
+      <NavBarTab path="/" label="Home" />  
+      <NavBarTab path="/public" label="Public" />
+      <NavBarTab path="/protected" label="Protected" />
       <NavBarTab path="/pets" label="Pets" />
       <NavBarTab path="/addPet" label="Add Pet" />
       <NavBarTab path="/profile" label="Profile" />
       <NavBarTab path="/admin" label="Admin" />
-      <NavBarTab path="/public" label="Public" />
-      <NavBarTab path="/protected" label="Protected" />
+
       </div>
     );
   }
   else {
     return (
       <div className="nav-bar__tabs">
+      <NavBarTab path="/" label="Home" />  
+      <NavBarTab path="/pets" label="Pets" />
       <NavBarTab path="/public" label="Public" />
       <NavBarTab path="/protected" label="Protected" />
       </div>
