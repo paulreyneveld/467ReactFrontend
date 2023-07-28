@@ -29,6 +29,11 @@ export const MobileNavBarTabs = ({ handleClick }) => {
             label="Admin"
             handleClick={handleClick}
           />
+          <MobileNavBarTab
+            path="/addPet"
+            label="Add Pet"
+            handleClick={handleClick}
+          />
         </>
       )}
     </div>
