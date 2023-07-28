@@ -104,3 +104,22 @@ export const getAdminResource = async (accessToken) => {
     error,
   };
 };
+
+export const createPetResource = async (accessToken, requestBody) => {
+  const config = {
+    url: `${apiServerUrl}/pets`,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    data: requestBody,
+  };
+
+  const { data, error } = await callExternalApi({ config });
+
+  return {
+    data: data || null,
+    error,
+  };
+};

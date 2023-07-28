@@ -11,6 +11,7 @@ import { ProfilePage } from "./pages/profile-page";
 import { ProtectedPage } from "./pages/protected-page";
 import { PublicPage } from "./pages/public-page";
 import { PetsPage } from "./pages/pets-page";
+import { AddPetPage } from "./pages/add-pet-page";
 
 export const App = () => {
   const { isLoading } = useAuth0();
@@ -39,6 +40,10 @@ export const App = () => {
       <Route
         path="/admin"
         element={<AuthenticationGuard component={AdminPage} />}
+      />
+      <Route
+        path="/addPet"
+        element={<AuthenticationGuard component={AddPetPage} />}
       />
       <Route path="/callback" element={<CallbackPage />} />
       <Route path="*" element={<NotFoundPage />} />
