@@ -9,7 +9,7 @@ export const PetsPage = () => {
   const [images, setImages] = useState([]);
   const [filters, setFilters] = useState({});
   const [breedOptions, setBreedOptions] = useState([{value: "", text: "All"}])
-  const { isAuthenticated } = useAuth0();
+  const { user } = useAuth0();
 
   let navigate = useNavigate();
 
@@ -58,7 +58,7 @@ export const PetsPage = () => {
 
   // Function to navigate to individual pet page when pet image is clicked
   const navigatePetProfile = (index, image, event) => {
-    navigate(`/petProfile/${image.petId}`);
+    navigate("/petProfile", { state : image.petData });
   }
 
   // Function for fetching images (filters as optional parameter)
@@ -95,7 +95,7 @@ export const PetsPage = () => {
 
         // Add pet profile creation date and Pet Datastore ID as property
         tempPet.creationDate = data[i]["creationDate"];
-        tempPet.petId = data[i]["id"];
+        tempPet.petData = data[i];
 
         // Add font color for different "availability" values
         // TODO: Add font colors for "pending" and "adopted"
@@ -133,65 +133,90 @@ export const PetsPage = () => {
     getImages();
   }, []);
 
-  return (
-    <PageLayout>
-      <div className="content-layout">
-        <h1 id="page-title" className="content__title">
-          Pets Page
-        </h1>
-        <div className="content__body">
-          <p id="page-description">
-            <span>
-              This page retrieves the pet information from an
-              external API.
-            </span>
-            <span>
-              {/* <strong>Only registered visitors can access this page.</strong> */}
-            </span>
-          </p>
-          {/* <CodeSnippet title="Public Message" code={message} /> */}
-          <form onSubmit={handleFilterSubmit}>
-            <fieldset>
-              <legend>SEARCH FILTERS</legend>
-              <label>Animal Type: </label>
-                <select id="typeAnimal" name="typeAnimal" onChange={handleFilterChangeDropdownAnimalType}>
-                  <option value="">All</option>
-                  <option value="dog">Dog</option>
-                  <option value="cat">Cat</option>
-                  <option value="other">Other</option>
+  if (user?.role === "user" || user?.role === "admin") {
+    return (
+      <PageLayout>
+        <div className="content-layout">
+          <h1 id="page-title" className="content__title">
+            Pets Page
+          </h1>
+          <div className="content__body">
+            <p id="page-description">
+              <span>
+                This page retrieves the pet information from an
+                external API.
+              </span>
+              <span>
+                {/* <strong>Only registered visitors can access this page.</strong> */}
+              </span>
+            </p>
+            {/* <CodeSnippet title="Public Message" code={message} /> */}
+            <form onSubmit={handleFilterSubmit}>
+              <fieldset>
+                <legend>SEARCH FILTERS</legend>
+                <label>Animal Type: </label>
+                  <select id="typeAnimal" name="typeAnimal" onChange={handleFilterChangeDropdownAnimalType}>
+                    <option value="">All</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="other">Other</option>
+                  </select><br></br>
+                <label>Animal Breed: </label>
+                <select id="breed" name="breed" onChange={handleFilterChangeDropdown}>
+                  {breedOptions.map((option) => {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    )
+                  })}
                 </select><br></br>
-              <label>Animal Breed: </label>
-              <select id="breed" name="breed" onChange={handleFilterChangeDropdown}>
-                {breedOptions.map((option) => {
-                  return (
-                    <option key={option.value} value={option.value}>
-                      {option.text}
-                    </option>
-                  )
-                })}
-              </select><br></br>
-              <input type="checkbox" id="goodWithAnimals" name="goodWithAnimals" value onChange={handleFilterChangeCheckbox} />
-              <label> Good with other animals</label><br></br>
-              <input type="checkbox" id="goodWithChildren" name="goodWithChildren" value onChange={handleFilterChangeCheckbox} />
-              <label> Good with children</label><br></br>
-              <input type="checkbox" id="leashedAllTimes" name="leashedAllTimes" value onChange={handleFilterChangeCheckbox} />
-              <label> Animal must be leashed at all times</label><br></br>
-            </fieldset>
-            <fieldset>
-              <legend>SORT BY DATE</legend>
-              <label>Sory by Pet Profile Creation Date: </label>
-              <select id="sortDate" name="sortDate" onChange={handleFilterChangeDropdown}>
-                <option value="">None</option>
-                <option value="Descending">Descending</option>
-                <option value="Ascending">Ascending</option>
-              </select><br></br>
-            </fieldset>
-            <input type="submit" value="Apply Filters/Sort" />
-          </form>
-          <br></br>
-          <Gallery images={images} enableImageSelection={false} onClick={navigatePetProfile} />
+                <input type="checkbox" id="goodWithAnimals" name="goodWithAnimals" value onChange={handleFilterChangeCheckbox} />
+                <label> Good with other animals</label><br></br>
+                <input type="checkbox" id="goodWithChildren" name="goodWithChildren" value onChange={handleFilterChangeCheckbox} />
+                <label> Good with children</label><br></br>
+                <input type="checkbox" id="leashedAllTimes" name="leashedAllTimes" value onChange={handleFilterChangeCheckbox} />
+                <label> Animal must be leashed at all times</label><br></br>
+              </fieldset>
+              <fieldset>
+                <legend>SORT BY DATE</legend>
+                <label>Sory by Pet Profile Creation Date: </label>
+                <select id="sortDate" name="sortDate" onChange={handleFilterChangeDropdown}>
+                  <option value="">None</option>
+                  <option value="Descending">Descending</option>
+                  <option value="Ascending">Ascending</option>
+                </select><br></br>
+              </fieldset>
+              <input type="submit" value="Apply Filters/Sort" />
+            </form>
+            <br></br>
+            <Gallery images={images} enableImageSelection={false} onClick={navigatePetProfile} />
+          </div>
         </div>
-      </div>
-    </PageLayout>
-  );
-};
+      </PageLayout>
+    )
+  } else {
+    return (
+      <PageLayout>
+        <div className="content-layout">
+          <h1 id="page-title" className="content__title">
+            Pets Page
+          </h1>
+          <div className="content__body">
+            <p id="page-description">
+              <span>
+                This page retrieves the pet information from an
+                external API.
+              </span>
+              <span>
+                {/* <strong>Only registered visitors can access this page.</strong> */}
+              </span>
+            </p>
+            {/* <CodeSnippet title="Public Message" code={message} /> */}
+            <Gallery images={images} enableImageSelection={false} />
+          </div>
+        </div>
+      </PageLayout>
+    )
+  }
+}

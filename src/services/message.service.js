@@ -36,24 +36,6 @@ export const getPetsResource = async () => {
   };
 };
 
-export const getPetIdResource = async (accessToken, petId) => {
-  const config = {
-    url: `${apiServerUrl}/pets/${petId}`,
-    method: "GET",
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  const { data, error } = await callExternalApi({ config });
-
-  return {
-    data: data || null,
-    error,
-  };
-};
-
 export const getProtectedResource = async (accessToken) => {
   const config = {
     url: `${apiServerUrl}/pets/protected`,

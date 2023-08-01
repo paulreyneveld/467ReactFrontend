@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CodeSnippet } from "../components/code-snippet";
 import { PageLayout } from "../components/page-layout";
-import { getPetIdResource } from "../services/message.service";
-import { useAuth0 } from '@auth0/auth0-react'
+import { getProtectedResource } from "../services/message.service";
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const PetProfilePage = () => {
   const [message, setMessage] = useState("");
@@ -15,14 +15,15 @@ export const PetProfilePage = () => {
 
     const getMessage = async () => {
       const accessToken = await getAccessTokenSilently();
-      const { data, error } = await getPetIdResource(accessToken, location.pathname.slice(12));
+      const { data, error } = await getProtectedResource(accessToken);
+      console.log(location.state);
 
       if (!isMounted) {
         return;
       }
 
       if (data) {
-        setMessage(JSON.stringify(data, null, 2));
+        setMessage(JSON.stringify(location.state));
       }
 
       if (error) {
