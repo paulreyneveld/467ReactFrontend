@@ -20,11 +20,11 @@ export const PetsPage = () => {
   ]
 
   // Event handler for updating Animal Type filter (select dropdown)
+  // Reset breed filter and update breed options when animal type is updated
   const handleFilterChangeDropdownAnimalType = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setFilters(values => ({...values, [name]: value}))
-    setFilters(values => ({...values, "breed": ""}))
+    setFilters(values => ({...values, "breed": "", [name]: value}))
 
     if (value === "dog") setBreedOptions(dogBreeds)
     else if (value === "cat") setBreedOptions(catBreeds)
