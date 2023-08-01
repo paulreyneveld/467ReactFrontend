@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PageLayout } from "../components/page-layout";
 import { getPetsResource } from "../services/message.service";
 import { Gallery } from "react-grid-gallery";
+import { useAuth0 } from '@auth0/auth0-react'
 
 export const PetsPage = () => {
   const [images, setImages] = useState([]);
   const [filters, setFilters] = useState({});
   const [breedOptions, setBreedOptions] = useState([{value: "", text: "All"}])
+  const { isAuthenticated } = useAuth0();
+
+  let navigate = useNavigate();
 
   let dogBreeds = [
     {value: "", text: "All"},
@@ -51,6 +56,15 @@ export const PetsPage = () => {
     getImages(filters);
   }
 
+  // Function to navigate to individual pet page when pet image is clicked
+  const navigatePetProfile = (index, image, event) => {
+    if (!isAuthenticated) {
+      alert("Please register for an account or log in to access pet profiles!");
+    } else {
+      navigate("/petProfile", {state: {petId: image.petId}});
+    }
+  }
+
   // Function for fetching images (filters as optional parameter)
   const getImages = async (filters) => {
     const { data, error } = await getPetsResource();
@@ -67,7 +81,6 @@ export const PetsPage = () => {
       for (let i = 0; i < data.length; i++) {
 
         // Skip any images that are filtered out
-        // TODO: Implement date created sorting option
         if (filters) {
           if (
             ((typeAnimal) && typeAnimal !== data[i]["typeAnimal"]) || 
@@ -84,8 +97,9 @@ export const PetsPage = () => {
         tempPet = data[i]["images"].length !== 0 ? { src: data[i]["images"][0] } :
         { src: "https://storage.googleapis.com/example-bucket-for-demo-purposes/GenericDogIcon.png" };
 
-        // Add pet profile creation date as property
+        // Add pet profile creation date and Pet Datastore ID as property
         tempPet.creationDate = data[i]["creationDate"];
+        tempPet.petId = data[i]["id"];
 
         // Add font color for different "availability" values
         // TODO: Add font colors for "pending" and "adopted"
@@ -179,7 +193,7 @@ export const PetsPage = () => {
             <input type="submit" value="Apply Filters/Sort" />
           </form>
           <br></br>
-          <Gallery images={images} />
+          <Gallery images={images} enableImageSelection={false} onClick={navigatePetProfile} />
         </div>
       </div>
     </PageLayout>
