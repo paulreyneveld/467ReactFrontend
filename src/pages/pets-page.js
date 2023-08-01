@@ -21,7 +21,7 @@ export const PetsPage = () => {
     setFilters(values => ({...values, [name]: value}))
   }
 
-  // Event handler for apply filters
+  // Event handler for applying filters
   const handleFilterSubmit = (event) => {
     event.preventDefault();
     getImages(filters);
@@ -31,12 +31,13 @@ export const PetsPage = () => {
   const getImages = async (filters) => {
     const { data, error } = await getPetsResource();
 
+    let typeAnimal, breed, goodWithAnimals, goodWithChildren, leashedAllTimes, sortDate;
+
     let tempImages = [];
     if (data) {
 
-      let typeAnimal, breed, goodWithAnimals, goodWithChildren, leashedAllTimes;
       if (filters) {
-        ({ typeAnimal, breed, goodWithAnimals, goodWithChildren, leashedAllTimes } = filters);
+        ({ typeAnimal, breed, goodWithAnimals, goodWithChildren, leashedAllTimes, sortDate } = filters);
       }
 
       for (let i = 0; i < data.length; i++) {
@@ -59,6 +60,9 @@ export const PetsPage = () => {
         tempPet = data[i]["images"].length !== 0 ? { src: data[i]["images"][0] } :
         { src: "https://storage.googleapis.com/example-bucket-for-demo-purposes/GenericDogIcon.png" };
 
+        // Add pet profile creation date as property
+        tempPet.creationDate = data[i]["creationDate"];
+
         // Add font color for different "availability" values
         // TODO: Add font colors for "pending" and "adopted"
         if (data[i]["availability"] === "available") {
@@ -76,6 +80,14 @@ export const PetsPage = () => {
         tempImages.push(tempPet)
       }
     }
+
+    // Apply sort (if selected)
+    if (sortDate === "Ascending") {
+      tempImages.sort((a, b) => (a.creationDate > b.creationDate) ? 1 : ((b.creationDate > a.creationDate) ? -1 : 0))
+    } else if (sortDate === "Descending") {
+      tempImages.sort((a, b) => (a.creationDate > b.creationDate) ? -1 : ((b.creationDate > a.creationDate) ? 1 : 0))
+    }
+
     setImages(tempImages)
 
     if (error) {
@@ -126,8 +138,17 @@ export const PetsPage = () => {
               <label> Good with children</label><br></br>
               <input type="checkbox" id="leashedAllTimes" name="leashedAllTimes" value onChange={handleFilterChangeCheckbox} />
               <label> Animal must be leashed at all times</label><br></br>
-              <input type="submit" value="Apply Filters" />
             </fieldset>
+            <fieldset>
+              <legend>SORT BY DATE</legend>
+              <label>Sory by Pet Profile Creation Date: </label>
+              <select id="sortDate" name="sortDate" onChange={handleFilterChangeDropdown}>
+                <option value="">None</option>
+                <option value="Descending">Descending</option>
+                <option value="Ascending">Ascending</option>
+              </select><br></br>
+            </fieldset>
+            <input type="submit" value="Apply Filters/Sort" />
           </form>
           <br></br>
           <Gallery images={images} />
