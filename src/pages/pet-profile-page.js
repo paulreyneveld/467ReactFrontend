@@ -15,7 +15,7 @@ export const PetProfilePage = () => {
 
     const getMessage = async () => {
       const accessToken = await getAccessTokenSilently();
-      const { data, error } = await getPetIdResource(accessToken, location.state.petId);
+      const { data, error } = await getPetIdResource(accessToken, location.pathname.slice(12));
 
       if (!isMounted) {
         return;
@@ -30,7 +30,7 @@ export const PetProfilePage = () => {
       }
     };
 
-    if (location.state !== null) getMessage();
+    getMessage();
 
     return () => {
       isMounted = false;

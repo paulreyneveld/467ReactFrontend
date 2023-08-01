@@ -58,11 +58,7 @@ export const PetsPage = () => {
 
   // Function to navigate to individual pet page when pet image is clicked
   const navigatePetProfile = (index, image, event) => {
-    if (!isAuthenticated) {
-      alert("Please register for an account or log in to access pet profiles!");
-    } else {
-      navigate("/petProfile", {state: {petId: image.petId}});
-    }
+    navigate(`/petProfile/${image.petId}`);
   }
 
   // Function for fetching images (filters as optional parameter)
