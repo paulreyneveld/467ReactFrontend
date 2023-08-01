@@ -6,6 +6,30 @@ import { Gallery } from "react-grid-gallery";
 export const PetsPage = () => {
   const [images, setImages] = useState([]);
   const [filters, setFilters] = useState({});
+  const [breedOptions, setBreedOptions] = useState([{value: "", text: "All"}])
+
+  let dogBreeds = [
+    {value: "", text: "All"},
+    {value: "German shepherd", text: "German Shepherd"},
+    {value: "Golden Retriever", text: "Golden Retriever"}
+  ]
+
+  let catBreeds = [
+    {value: "", text: "All"},
+    {value: "Maine Coon", text: "Maine Coon"}
+  ]
+
+  // Event handler for updating Animal Type filter (select dropdown)
+  const handleFilterChangeDropdownAnimalType = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setFilters(values => ({...values, [name]: value}))
+    setFilters(values => ({...values, "breed": ""}))
+
+    if (value === "dog") setBreedOptions(dogBreeds)
+    else if (value === "cat") setBreedOptions(catBreeds)
+    else setBreedOptions([{value: "", text: "All"}])
+  }
 
   // Event handler for updating filters (select dropdown)
   const handleFilterChangeDropdown = (event) => {
@@ -87,8 +111,8 @@ export const PetsPage = () => {
     } else if (sortDate === "Descending") {
       tempImages.sort((a, b) => (a.creationDate > b.creationDate) ? -1 : ((b.creationDate > a.creationDate) ? 1 : 0))
     }
-
-    setImages(tempImages)
+    
+    setImages(tempImages);
 
     if (error) {
       console.log(error);
@@ -120,7 +144,7 @@ export const PetsPage = () => {
             <fieldset>
               <legend>SEARCH FILTERS</legend>
               <label>Animal Type: </label>
-                <select id="typeAnimal" name="typeAnimal" onChange={handleFilterChangeDropdown}>
+                <select id="typeAnimal" name="typeAnimal" onChange={handleFilterChangeDropdownAnimalType}>
                   <option value="">All</option>
                   <option value="dog">Dog</option>
                   <option value="cat">Cat</option>
@@ -128,9 +152,13 @@ export const PetsPage = () => {
                 </select><br></br>
               <label>Animal Breed: </label>
               <select id="breed" name="breed" onChange={handleFilterChangeDropdown}>
-                <option value="">All</option>
-                <option value="German shepherd">German Shepherd</option>
-                <option value="Golden Retriever">Golden Retriever</option>
+                {breedOptions.map((option) => {
+                  return (
+                    <option key={option.value} value={option.value}>
+                      {option.text}
+                    </option>
+                  )
+                })}
               </select><br></br>
               <input type="checkbox" id="goodWithAnimals" name="goodWithAnimals" value onChange={handleFilterChangeCheckbox} />
               <label> Good with other animals</label><br></br>
