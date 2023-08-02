@@ -142,15 +142,10 @@ export const PetsPage = () => {
           </h1>
           <div className="content__body">
             <p id="page-description">
+              Filter for your preferred companion then click their image to learn more. 
               <span>
-                This page retrieves the pet information from an
-                external API.
-              </span>
-              <span>
-                {/* <strong>Only registered visitors can access this page.</strong> */}
               </span>
             </p>
-            {/* <CodeSnippet title="Public Message" code={message} /> */}
             <form onSubmit={handleFilterSubmit}>
               <fieldset>
                 <legend>SEARCH FILTERS</legend>
@@ -205,14 +200,9 @@ export const PetsPage = () => {
           <div className="content__body">
             <p id="page-description">
               <span>
-                This page retrieves the pet information from an
-                external API.
-              </span>
-              <span>
-                {/* <strong>Only registered visitors can access this page.</strong> */}
+              Create an account to search and view pet profiles.
               </span>
             </p>
-            {/* <CodeSnippet title="Public Message" code={message} /> */}
             <Gallery images={images} enableImageSelection={false} />
           </div>
         </div>

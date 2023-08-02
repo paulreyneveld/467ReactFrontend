@@ -3,16 +3,13 @@ import React from "react";
 import { NavBarTab } from "./nav-bar-tab";
 
 export const NavBarTabs = () => {
-  const { isAuthenticated } = useAuth0();
+
   const { user } = useAuth0();
-  console.log(user);
 
   if (user?.role === "user") {
     return (
       <div className="nav-bar__tabs">
       <NavBarTab path="/" label="Home" />  
-      <NavBarTab path="/public" label="Public" />
-      <NavBarTab path="/protected" label="Protected" />  
       <NavBarTab path="/pets" label="Pets" />
       <NavBarTab path="/profile" label="Profile" />
       </div>
@@ -22,13 +19,9 @@ export const NavBarTabs = () => {
     return (
       <div className="nav-bar__tabs">
       <NavBarTab path="/" label="Home" />  
-      <NavBarTab path="/public" label="Public" />
-      <NavBarTab path="/protected" label="Protected" />
       <NavBarTab path="/pets" label="Pets" />
-      <NavBarTab path="/addPet" label="Add Pet" />
       <NavBarTab path="/profile" label="Profile" />
-      <NavBarTab path="/admin" label="Admin" />
-
+      <NavBarTab path="/addPet" label="Add Pet" />
       </div>
     );
   }
@@ -37,8 +30,6 @@ export const NavBarTabs = () => {
       <div className="nav-bar__tabs">
       <NavBarTab path="/" label="Home" />  
       <NavBarTab path="/pets" label="Pets" />
-      <NavBarTab path="/public" label="Public" />
-      <NavBarTab path="/protected" label="Protected" />
       </div>
     );
   }
