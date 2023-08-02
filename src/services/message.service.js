@@ -110,11 +110,12 @@ export const createPetResource = async (accessToken, requestBody) => {
     url: `${apiServerUrl}/pets`,
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${accessToken}`,
     },
     data: requestBody,
   };
+  console.log(requestBody.get('typeAnimal'));
 
   const { data, error } = await callExternalApi({ config });
 

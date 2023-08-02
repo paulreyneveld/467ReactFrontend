@@ -14,8 +14,23 @@ export const AddPetPage = () => {
   const [goodWithChildren, setGoodWithChildren] = useState(false);
   const [leashedAllTimes, setLeashedAllTimes] = useState(false);
 
+  const [image, setImage] = useState({ preview: '', data: '' })
+
   const addPet = async (event) => {
     event.preventDefault();
+
+    let formData = new FormData();
+    formData.append('typeAnimal', typeAnimal);
+    formData.append('breed', breed);
+    formData.append('description', description);
+    formData.append('images', images);
+    formData.append('goodWithAnimals', goodWithAnimals);
+    formData.append('goodWithChildren', goodWithChildren);
+    formData.append('leashedAllTimes', leashedAllTimes);
+    console.log(formData.get('typeAnimal'));
+
+    formData.append('file', image.data)
+
     const petObject = {
       typeAnimal: typeAnimal,
       breed: breed,
@@ -27,7 +42,7 @@ export const AddPetPage = () => {
     };
 
     const accessToken = await getAccessTokenSilently();
-    const { data, error } = await createPetResource(accessToken, petObject);
+    const { data, error } = await createPetResource(accessToken, formData);
 
     setTypeAnimal("dog");
     setBreed("");
@@ -70,6 +85,14 @@ export const AddPetPage = () => {
     setLeashedAllTimes(event.target.checked);
   };
 
+  const handleFileChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    }
+    setImage(img)
+  }
+
   const handleCreateButton = () => {};
   return (
     <PageLayout>
@@ -78,8 +101,12 @@ export const AddPetPage = () => {
           Add Pet
         </h1>
         <div className="content__body">
+          {image.preview && <img src={image.preview} width='100' height='100' />}
           <form onSubmit={addPet}>
             <div>
+              <label>Image: </label>
+              <input type='file' name='file' onChange={handleFileChange}></input>
+              <br />
               <label>
                 Animal Type:
                 <br />
