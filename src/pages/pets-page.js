@@ -180,6 +180,7 @@ export const PetsPage = () => {
               <fieldset className="sort-by-date">
                 <legend>SORT BY DATE</legend>
                 <label>Sory by Pet Profile Creation Date: </label>
+                <br />
                 <select id="sortDate" name="sortDate" onChange={handleFilterChangeDropdown}>
                   <option value="">None</option>
                   <option value="Descending">Descending</option>
