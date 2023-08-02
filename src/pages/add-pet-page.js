@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CodeSnippet } from "../components/code-snippet";
 import { PageLayout } from "../components/page-layout";
 import { createPetResource } from "../services/message.service";
 import { useAuth0 } from "@auth0/auth0-react";

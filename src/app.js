@@ -38,6 +38,10 @@ export const App = () => {
         path="/petProfile"
         element={<AuthenticationGuard component={PetProfilePage} />}
       />
+      <Route
+        path="/pets"
+        element={<AuthenticationGuard component={PetsPage} />}
+      />
       <Route path="/callback" element={<CallbackPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

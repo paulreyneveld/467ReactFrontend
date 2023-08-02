@@ -6,6 +6,7 @@ import { Gallery } from "react-grid-gallery";
 import { useAuth0 } from '@auth0/auth0-react'
 
 export const PetsPage = () => {
+
   const [images, setImages] = useState([]);
   const [filters, setFilters] = useState({});
   const [breedOptions, setBreedOptions] = useState([{value: "", text: "All"}])
