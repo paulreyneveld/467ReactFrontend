@@ -88,6 +88,11 @@ export const UpdatePetProfilePage = () => {
         </h1>
         <div className="content__body">
           <form onSubmit={updatePet}>
+          <img
+          style={{ height: "auto", width: "50%" }}
+          src={petData.images[0]}
+          alt={petData.breed}
+          />
             <div>
               <label>
                 Animal Type:
