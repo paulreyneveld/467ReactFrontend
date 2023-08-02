@@ -145,7 +145,6 @@ export const AddPetPage = () => {
               Create
             </button>
           </form>
-          {/* <CodeSnippet title="Protected Message" code={message} /> */}
         </div>
       </div>
     </PageLayout>
