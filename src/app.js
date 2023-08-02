@@ -10,6 +10,7 @@ import { ProfilePage } from "./pages/profile-page";
 import { PetsPage } from "./pages/pets-page";
 import { AddPetPage } from "./pages/add-pet-page";
 import { PetProfilePage } from "./pages/pet-profile-page";
+import { UpdatePetProfilePage } from "./pages/update-pet-profile";
 
 export const App = () => {
   const { isLoading } = useAuth0();
@@ -37,6 +38,10 @@ export const App = () => {
       <Route
         path="/petProfile"
         element={<AuthenticationGuard component={PetProfilePage} />}
+      />
+      <Route
+        path="/updatePetProfile"
+        element={<AuthenticationGuard component={UpdatePetProfilePage} />}
       />
       <Route
         path="/pets"

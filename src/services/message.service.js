@@ -123,3 +123,40 @@ export const createPetResource = async (accessToken, requestBody) => {
     error,
   };
 };
+
+export const deletePetResource = async (accessToken, id) => {
+  const config = {
+    url: `${apiServerUrl}/pets/${id}`,
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = await callExternalApi({ config });
+
+  return {
+    data: data || null,
+    error,
+  };
+};
+
+export const updatePetResource = async (accessToken, id, requestBody) => {
+  const config = {
+    url: `${apiServerUrl}/pets/${id}`,
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    data: requestBody,
+  };
+
+  const { data, error } = await callExternalApi({ config });
+
+  return {
+    data: data || null,
+    error,
+  };
+};
