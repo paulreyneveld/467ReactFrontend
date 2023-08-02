@@ -147,16 +147,18 @@ export const PetsPage = () => {
               </span>
             </p>
             <form onSubmit={handleFilterSubmit}>
-              <fieldset>
+              <fieldset className="search-filters">
                 <legend>SEARCH FILTERS</legend>
                 <label>Animal Type: </label>
+                <br />
                   <select id="typeAnimal" name="typeAnimal" onChange={handleFilterChangeDropdownAnimalType}>
                     <option value="">All</option>
                     <option value="dog">Dog</option>
                     <option value="cat">Cat</option>
                     <option value="other">Other</option>
-                  </select><br></br>
+                  </select><br></br><br />
                 <label>Animal Breed: </label>
+                <br />
                 <select id="breed" name="breed" onChange={handleFilterChangeDropdown}>
                   {breedOptions.map((option) => {
                     return (
@@ -165,7 +167,9 @@ export const PetsPage = () => {
                       </option>
                     )
                   })}
-                </select><br></br>
+                </select><br></br> <br />
+                <label>Disposition:</label>
+                <br />
                 <input type="checkbox" id="goodWithAnimals" name="goodWithAnimals" value onChange={handleFilterChangeCheckbox} />
                 <label> Good with other animals</label><br></br>
                 <input type="checkbox" id="goodWithChildren" name="goodWithChildren" value onChange={handleFilterChangeCheckbox} />
@@ -173,7 +177,7 @@ export const PetsPage = () => {
                 <input type="checkbox" id="leashedAllTimes" name="leashedAllTimes" value onChange={handleFilterChangeCheckbox} />
                 <label> Animal must be leashed at all times</label><br></br>
               </fieldset>
-              <fieldset>
+              <fieldset className="sort-by-date">
                 <legend>SORT BY DATE</legend>
                 <label>Sory by Pet Profile Creation Date: </label>
                 <select id="sortDate" name="sortDate" onChange={handleFilterChangeDropdown}>
@@ -182,6 +186,7 @@ export const PetsPage = () => {
                   <option value="Ascending">Ascending</option>
                 </select><br></br>
               </fieldset>
+
               <input type="submit" value="Apply Filters/Sort" />
             </form>
             <br></br>

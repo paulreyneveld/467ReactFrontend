@@ -83,6 +83,7 @@ export const AddPetPage = () => {
             <div>
               <label>
                 Animal Type:
+                <br />
                 <select
                   defaultValue={typeAnimal}
                   onChange={handleTypeAnimalChange}
@@ -93,23 +94,30 @@ export const AddPetPage = () => {
                 </select>
               </label>
             </div>
+            <br />
             <div>
               <label>
                 Breed:
+                <br />
                 <input value={breed} onChange={handleBreedChange} />
               </label>
             </div>
+            <br />
             <div>
               <label>
                 Description:
+                <br />
                 <textarea
                   value={description}
                   onChange={handleDescriptionChange}
+                  rows="15"
+                  cols="95"
                 />
               </label>
             </div>
-            Disposition:
-            <div>
+            
+            <div className="disposition">
+            Disposition
               <div>
                 <label>
                   Good With Animals:
@@ -141,7 +149,7 @@ export const AddPetPage = () => {
                 </label>
               </div>
             </div>
-            <button type="submit" onClick={handleCreateButton}>
+            <button type="submit" className="button__create-pet" onClick={handleCreateButton}>
               Create
             </button>
           </form>
