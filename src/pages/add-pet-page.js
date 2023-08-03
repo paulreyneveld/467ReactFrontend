@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { PageLayout } from "../components/page-layout";
 import { createPetResource } from "../services/message.service";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -14,32 +14,21 @@ export const AddPetPage = () => {
   const [goodWithChildren, setGoodWithChildren] = useState(false);
   const [leashedAllTimes, setLeashedAllTimes] = useState(false);
 
-  const [image, setImage] = useState({ preview: '', data: '' })
+  const [imageFile, setImageFile] = useState("")
+  const inputFile = useRef(null);
 
   const addPet = async (event) => {
     event.preventDefault();
 
     let formData = new FormData();
-    formData.append('typeAnimal', typeAnimal);
-    formData.append('breed', breed);
-    formData.append('description', description);
-    formData.append('images', images);
-    formData.append('goodWithAnimals', goodWithAnimals);
-    formData.append('goodWithChildren', goodWithChildren);
-    formData.append('leashedAllTimes', leashedAllTimes);
-    console.log(formData.get('typeAnimal'));
-
-    formData.append('file', image.data)
-
-    const petObject = {
-      typeAnimal: typeAnimal,
-      breed: breed,
-      description: description,
-      images: images,
-      goodWithAnimals: goodWithAnimals,
-      goodWithChildren: goodWithChildren,
-      leashedAllTimes: leashedAllTimes,
-    };
+    formData.append("typeAnimal", typeAnimal);
+    formData.append("breed", breed);
+    formData.append("description", description);
+    formData.append("images", images);
+    formData.append("goodWithAnimals", goodWithAnimals);
+    formData.append("goodWithChildren", goodWithChildren);
+    formData.append("leashedAllTimes", leashedAllTimes);
+    formData.append("file", imageFile)
 
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await createPetResource(accessToken, formData);
@@ -50,6 +39,7 @@ export const AddPetPage = () => {
     setGoodWithAnimals(false);
     setGoodWithChildren(false);
     setLeashedAllTimes(false);
+    setImageFile("");
 
     // TODO: Error handling.
     if (data) {
@@ -85,15 +75,15 @@ export const AddPetPage = () => {
     setLeashedAllTimes(event.target.checked);
   };
 
-  const handleFileChange = (e) => {
-    const img = {
-      preview: URL.createObjectURL(e.target.files[0]),
-      data: e.target.files[0],
-    }
-    setImage(img)
+  const handleFileChange = (event) => {
+    const newImageFile = event.target.files[0]
+    setImageFile(newImageFile)
   }
 
-  const handleCreateButton = () => {};
+  const handleCreateButton = () => {
+    inputFile.current.value = "";
+  };
+
   return (
     <PageLayout>
       <div className="content-layout">
@@ -101,12 +91,8 @@ export const AddPetPage = () => {
           Add Pet
         </h1>
         <div className="content__body">
-          {image.preview && <img src={image.preview} width='100' height='100' />}
           <form onSubmit={addPet}>
             <div>
-              <label>Image: </label>
-              <input type='file' name='file' onChange={handleFileChange}></input>
-              <br />
               <label>
                 Animal Type:
                 <br />
@@ -141,7 +127,15 @@ export const AddPetPage = () => {
                 />
               </label>
             </div>
-            
+            <br />
+            <div>
+              <label>
+                Pet Image: 
+                <br />
+                <input type='file' name='file' ref={inputFile} onChange={handleFileChange} />
+              </label>
+            </div>
+            <br />
             <div className="disposition">
             Disposition
               <div>

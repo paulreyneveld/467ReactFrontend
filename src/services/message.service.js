@@ -115,7 +115,6 @@ export const createPetResource = async (accessToken, requestBody) => {
     },
     data: requestBody,
   };
-  console.log(requestBody.get('typeAnimal'));
 
   const { data, error } = await callExternalApi({ config });
 
