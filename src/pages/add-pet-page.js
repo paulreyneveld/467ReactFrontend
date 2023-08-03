@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { PageLayout } from "../components/page-layout";
 import { createPetResource } from "../services/message.service";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -14,20 +14,24 @@ export const AddPetPage = () => {
   const [goodWithChildren, setGoodWithChildren] = useState(false);
   const [leashedAllTimes, setLeashedAllTimes] = useState(false);
 
+  const [imageFile, setImageFile] = useState("")
+  const inputFile = useRef(null);
+
   const addPet = async (event) => {
     event.preventDefault();
-    const petObject = {
-      typeAnimal: typeAnimal,
-      breed: breed,
-      description: description,
-      images: images,
-      goodWithAnimals: goodWithAnimals,
-      goodWithChildren: goodWithChildren,
-      leashedAllTimes: leashedAllTimes,
-    };
+
+    let formData = new FormData();
+    formData.append("typeAnimal", typeAnimal);
+    formData.append("breed", breed);
+    formData.append("description", description);
+    formData.append("images", images);
+    formData.append("goodWithAnimals", goodWithAnimals);
+    formData.append("goodWithChildren", goodWithChildren);
+    formData.append("leashedAllTimes", leashedAllTimes);
+    formData.append("file", imageFile)
 
     const accessToken = await getAccessTokenSilently();
-    const { data, error } = await createPetResource(accessToken, petObject);
+    const { data, error } = await createPetResource(accessToken, formData);
 
     setTypeAnimal("dog");
     setBreed("");
@@ -35,6 +39,7 @@ export const AddPetPage = () => {
     setGoodWithAnimals(false);
     setGoodWithChildren(false);
     setLeashedAllTimes(false);
+    setImageFile("");
 
     // TODO: Error handling.
     if (data) {
@@ -70,7 +75,15 @@ export const AddPetPage = () => {
     setLeashedAllTimes(event.target.checked);
   };
 
-  const handleCreateButton = () => {};
+  const handleFileChange = (event) => {
+    const newImageFile = event.target.files[0]
+    setImageFile(newImageFile)
+  }
+
+  const handleCreateButton = () => {
+    inputFile.current.value = "";
+  };
+
   return (
     <PageLayout>
       <div className="content-layout">
@@ -114,7 +127,15 @@ export const AddPetPage = () => {
                 />
               </label>
             </div>
-            
+            <br />
+            <div>
+              <label>
+                Pet Image: 
+                <br />
+                <input type='file' name='file' ref={inputFile} onChange={handleFileChange} />
+              </label>
+            </div>
+            <br />
             <div className="disposition">
             Disposition
               <div>
