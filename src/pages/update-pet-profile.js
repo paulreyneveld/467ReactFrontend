@@ -1,7 +1,7 @@
+import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { PageLayout } from "../components/page-layout";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState } from "react";
 // Paul: Implement this
 import { updatePetResource } from "../services/message.service";
 
@@ -9,7 +9,7 @@ export const UpdatePetProfilePage = () => {
   // const { user } = useAuth0();
   const location = useLocation();
   const { petData } = location.state;
-  console.log(petData.breed);
+  // console.log(petData.breed);
   // console.log(petData);
 
   const { getAccessTokenSilently } = useAuth0();
@@ -22,36 +22,42 @@ export const UpdatePetProfilePage = () => {
   const [goodWithChildren, setGoodWithChildren] = useState(petData.goodWithChildren);
   const [leashedAllTimes, setLeashedAllTimes] = useState(petData.leashedAllTimes);
 
+  const [imageFile, setImageFile] = useState("")
+  const inputFile = useRef(null);
+
   const updatePet = async (event) => {
     event.preventDefault();
-    const petObject = {
-      typeAnimal: typeAnimal,
-      breed: breed,
-      description: description,
-      images: images,
-      goodWithAnimals: goodWithAnimals,
-      goodWithChildren: goodWithChildren,
-      leashedAllTimes: leashedAllTimes,
-    };
+
+    let formData = new FormData();
+    formData.append("typeAnimal", typeAnimal);
+    formData.append("breed", breed);
+    formData.append("description", description);
+    formData.append("images", images);
+    formData.append("goodWithAnimals", goodWithAnimals);
+    formData.append("goodWithChildren", goodWithChildren);
+    formData.append("leashedAllTimes", leashedAllTimes);
+    formData.append("file", imageFile);
 
     const accessToken = await getAccessTokenSilently();
-    // const { data, error } = await createPetResource(accessToken, petObject);
+    const { data, error } = await updatePetResource(accessToken, petData.id, formData);
 
+    // TODO: How do you want the input fields to appear after form submission?
     setTypeAnimal("dog");
     setBreed("");
     setDescription("");
     setGoodWithAnimals(false);
     setGoodWithChildren(false);
     setLeashedAllTimes(false);
+    setImageFile("");
 
     // TODO: Error handling.
-    // if (data) {
-    //   console.log("data:", data);
-    // }
+    if (data) {
+      console.log("data:", data);
+    }
 
-    // if (error) {
-    //   console.log("error:", error);
-    // }
+    if (error) {
+      console.log("error:", error);
+    }
   };
 
   const handleTypeAnimalChange = (event) => {
@@ -78,7 +84,14 @@ export const UpdatePetProfilePage = () => {
     setLeashedAllTimes(event.target.checked);
   };
 
-  const handleCreateButton = () => {};
+  const handleFileChange = (event) => {
+    const newImageFile = event.target.files[0]
+    setImageFile(newImageFile)
+  }
+
+  const handleCreateButton = () => {
+    inputFile.current.value = "";
+  };
 
   return (
     <PageLayout>
@@ -128,7 +141,15 @@ export const UpdatePetProfilePage = () => {
                 />
               </label>
             </div>
-            
+            <br />
+            <div>
+              <label>
+                Pet Image: 
+                <br />
+                <input type='file' name='file' ref={inputFile} onChange={handleFileChange} />
+              </label>
+            </div>
+            <br />
             <div className="disposition">
             Disposition
               <div>

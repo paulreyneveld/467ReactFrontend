@@ -147,7 +147,7 @@ export const updatePetResource = async (accessToken, id, requestBody) => {
     url: `${apiServerUrl}/pets/${id}`,
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${accessToken}`,
     },
     data: requestBody,
