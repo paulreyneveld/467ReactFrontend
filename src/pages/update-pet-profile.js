@@ -144,7 +144,7 @@ export const UpdatePetProfilePage = () => {
             <br />
             <div>
               <label>
-                Pet Image: 
+                Pet Image (PNG, JPG, or JPEG):
                 <br />
                 <input type='file' name='file' ref={inputFile} onChange={handleFileChange} />
               </label>
