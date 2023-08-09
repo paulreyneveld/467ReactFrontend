@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { PageLayout } from "../components/page-layout";
 import { createPetResource } from "../services/message.service";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export const AddPetPage = () => {
   const { getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate();
 
   const [typeAnimal, setTypeAnimal] = useState("dog");
   const [breed, setBreed] = useState("");
@@ -44,10 +46,13 @@ export const AddPetPage = () => {
     // TODO: Error handling.
     if (data) {
       console.log("data:", data);
+      alert("Pet added successfully!");
+      navigate("/petProfile", { state: data });
     }
 
     if (error) {
-      console.log("error:", error);
+      console.log("Error: " + error.message);
+      alert("Error: " + error.message);
     }
   };
 

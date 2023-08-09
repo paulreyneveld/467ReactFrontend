@@ -49,11 +49,13 @@ export const UpdatePetProfilePage = () => {
     // TODO: Error handling.
     if (data) {
       console.log("data:", data);
+      alert("Pet updated successfully!");
       navigate("/petProfile", { state: data });
     }
 
     if (error) {
-      console.log("error:", error);
+      console.log("Error:", error.message);
+      alert("Error:", error.message);
     }
   };
 
