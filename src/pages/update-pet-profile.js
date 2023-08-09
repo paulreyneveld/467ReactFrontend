@@ -54,8 +54,8 @@ export const UpdatePetProfilePage = () => {
     }
 
     if (error) {
-      console.log("Error:", error.message);
-      alert("Error:", error.message);
+      console.log("Error: " + error.message);
+      alert("Error: " + error.message);
     }
   };
 
