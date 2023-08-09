@@ -1,16 +1,13 @@
 import React, { useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { PageLayout } from "../components/page-layout";
 import { useAuth0 } from "@auth0/auth0-react";
-// Paul: Implement this
 import { updatePetResource } from "../services/message.service";
 
 export const UpdatePetProfilePage = () => {
-  // const { user } = useAuth0();
+  const navigate = useNavigate();
   const location = useLocation();
   const { petData } = location.state;
-  // console.log(petData.breed);
-  // console.log(petData);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -41,7 +38,6 @@ export const UpdatePetProfilePage = () => {
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await updatePetResource(accessToken, petData.id, formData);
 
-    // TODO: How do you want the input fields to appear after form submission?
     setTypeAnimal("dog");
     setBreed("");
     setDescription("");
@@ -53,6 +49,7 @@ export const UpdatePetProfilePage = () => {
     // TODO: Error handling.
     if (data) {
       console.log("data:", data);
+      navigate("/petProfile", { state: data });
     }
 
     if (error) {

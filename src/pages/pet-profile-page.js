@@ -65,12 +65,15 @@ export const PetProfilePage = () => {
               <strong>Type of animal: </strong> {petData.typeAnimal}
             </li>
             <li>
-              <strong>Good with children: </strong>{" "}
-              {petData.goodWithChildren ? "Yes" : "No"}
+              <strong>Breed: </strong> {petData.breed}
             </li>
             <li>
               <strong>Good with other animals: </strong>{" "}
               {petData.goodWithAnimals ? "Yes" : "No"}
+            </li>
+            <li>
+              <strong>Good with children: </strong>{" "}
+              {petData.goodWithChildren ? "Yes" : "No"}
             </li>
             <li>
               <strong>Needs to be leashed at all times: </strong>{" "}
