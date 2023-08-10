@@ -17,14 +17,34 @@ export const PetsPage = () => {
   let dogBreeds = [
     {value: "", text: "All"},
     {value: "German shepherd", text: "German Shepherd"},
-    {value: "Golden Retriever", text: "Golden Retriever"}
+    {value: "Golden Retriever", text: "Golden Retriever"},
+    {value: "Labrador", text: "Labrador"},
+    {value: "Pit Bull", text: "Pit Bull"},
+    {value: "French Bulldog", text: "French Bulldog"},
+    {value: "Rottweiler", text: "Rottweiler"},
+    {value: "Beagle", text: "Beagle"},
+    {value: "Dachsund", text: "Dachsund"},
+    {value: "Boxer", text: "Boxer"},
+    {value: "Yorkie", text: "Yorkie"},
+    {value: "Poodle", text: "Poodle"},
+    {value: "Mixed Breed", text: "Mixed Breed"}
   ]
 
   let catBreeds = [
     {value: "", text: "All"},
-    {value: "Maine Coon", text: "Maine Coon"}
+    {value: "Siamese", text: "Siamese"},
+    {value: "Persian", text: "Persian"},
+    {value: "Maine Coon", text: "Maine Coon"},
+    {value: "Ragdoll", text: "Ragdoll"},
+    {value: "Bengal", text: "Bengal"},
+    {value: "Abyssinian", text: "Abyssinian"},
+    {value: "Birman", text: "Birman"},
+    {value: "Himalayan", text: "Himalayan"},
+    {value: "American Shorthair", text: "American Shorthair"},
+    {value: "Mixed Breed", text: "Mixed Breed"}
   ]
 
+  
   // Event handler for updating Animal Type filter (select dropdown)
   // Reset breed filter and update breed options when animal type is updated
   const handleFilterChangeDropdownAnimalType = (event) => {

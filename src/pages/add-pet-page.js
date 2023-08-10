@@ -15,9 +15,43 @@ export const AddPetPage = () => {
   const [goodWithAnimals, setGoodWithAnimals] = useState(false);
   const [goodWithChildren, setGoodWithChildren] = useState(false);
   const [leashedAllTimes, setLeashedAllTimes] = useState(false);
+  
+  const [filters, setFilters] = useState({});
 
   const [imageFile, setImageFile] = useState("")
   const inputFile = useRef(null);
+
+  let dogBreeds = [
+    {value: "", text: "All"},
+    {value: "German shepherd", text: "German Shepherd"},
+    {value: "Golden Retriever", text: "Golden Retriever"},
+    {value: "Labrador", text: "Labrador"},
+    {value: "Pit Bull", text: "Pit Bull"},
+    {value: "French Bulldog", text: "French Bulldog"},
+    {value: "Rottweiler", text: "Rottweiler"},
+    {value: "Beagle", text: "Beagle"},
+    {value: "Dachsund", text: "Dachsund"},
+    {value: "Boxer", text: "Boxer"},
+    {value: "Yorkie", text: "Yorkie"},
+    {value: "Poodle", text: "Poodle"},
+    {value: "Mixed Breed", text: "Mixed Breed"}
+  ]
+
+  let catBreeds = [
+    {value: "", text: "All"},
+    {value: "Siamese", text: "Siamese"},
+    {value: "Persian", text: "Persian"},
+    {value: "Maine Coon", text: "Maine Coon"},
+    {value: "Ragdoll", text: "Ragdoll"},
+    {value: "Bengal", text: "Bengal"},
+    {value: "Abyssinian", text: "Abyssinian"},
+    {value: "Birman", text: "Birman"},
+    {value: "Himalayan", text: "Himalayan"},
+    {value: "American Shorthair", text: "American Shorthair"},
+    {value: "Mixed Breed", text: "Mixed Breed"}
+  ]
+
+  const [breedOptions, setBreedOptions] = useState(dogBreeds);
 
   const addPet = async (event) => {
     event.preventDefault();
@@ -56,13 +90,13 @@ export const AddPetPage = () => {
     }
   };
 
-  const handleTypeAnimalChange = (event) => {
-    setTypeAnimal(event.target.value);
-  };
+  // const handleTypeAnimalChange = (event) => {
+  //   setTypeAnimal(event.target.value);
+  // };
 
-  const handleBreedChange = (event) => {
-    setBreed(event.target.value);
-  };
+  // const handleBreedChange = (event) => {
+  //   setBreed(event.target.value);
+  // };
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -89,6 +123,24 @@ export const AddPetPage = () => {
     inputFile.current.value = "";
   };
 
+  const handleFilterChangeDropdownAnimalType = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    // setFilters(values => ({...values, "breed": "", [name]: value}))
+    setTypeAnimal(value);
+    if (value === "dog") setBreedOptions(dogBreeds)
+    else if (value === "cat") setBreedOptions(catBreeds)
+    else setBreedOptions([{value: "", text: "All"}])
+  };
+
+  const handleFilterChangeDropdown = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    console.log(value)
+    setBreed(value);
+    // setFilters(values => ({...values, [name]: value}))
+  };
+
   return (
     <PageLayout>
       <div className="content-layout">
@@ -103,7 +155,7 @@ export const AddPetPage = () => {
                 <br />
                 <select
                   defaultValue={typeAnimal}
-                  onChange={handleTypeAnimalChange}
+                  onChange={handleFilterChangeDropdownAnimalType}
                 >
                   <option value="dog">Dog</option>
                   <option value="cat">Cat</option>
@@ -113,12 +165,25 @@ export const AddPetPage = () => {
             </div>
             <br />
             <div>
+            <label>Animal Breed:</label>
+            <br />
+            <select id="breed" name="breed" onChange={handleFilterChangeDropdown}>
+                  {breedOptions.map((option) => {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    )
+                  })}
+                </select><br></br> <br />
+            </div>
+            {/* <div>
               <label>
                 Breed:
                 <br />
                 <input value={breed} onChange={handleBreedChange} />
               </label>
-            </div>
+            </div> */}
             <br />
             <div>
               <label>
