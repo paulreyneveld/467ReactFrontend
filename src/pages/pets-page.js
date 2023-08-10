@@ -87,7 +87,8 @@ export const PetsPage = () => {
     const { data, error } = await getPetsResource();
 
     let typeAnimal, breed, goodWithAnimals, goodWithChildren, leashedAllTimes, sortDate;
-
+    console.log(filters)
+    console.log(data)
     let tempImages = [];
     if (data) {
 
@@ -101,7 +102,7 @@ export const PetsPage = () => {
         if (filters) {
           if (
             ((typeAnimal) && typeAnimal !== data[i]["typeAnimal"]) || 
-            ((breed) && breed !== data[i]["breed"]) || 
+            ((breed.toLowerCase()) && breed.toLowerCase() !== data[i]["breed"]) || 
             ((goodWithAnimals) && goodWithAnimals !== data[i]["goodWithAnimals"]) || 
             ((goodWithChildren) && goodWithChildren !== data[i]["goodWithChildren"]) || 
             ((leashedAllTimes) && leashedAllTimes !== data[i]["leashedAllTimes"])
