@@ -15,6 +15,7 @@ export const HomePage = () => (
               to learn more. 
               </span>
       </p>
+      <img alt="Dog in the forest" src="/dogphoto.png"></img>
       </div>
     </div>
   </PageLayout>
