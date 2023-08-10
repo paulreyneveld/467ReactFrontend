@@ -85,14 +85,25 @@ export const PetProfilePage = () => {
           </ul>
           {user?.role === "admin" && (
             <>
-              <button onClick={handlePetUpdateButton}>Update</button>
-              <button onClick={() => handleDeletePetProfile(petData.id)}>
+              <button 
+                onClick={handlePetUpdateButton}
+                className="button__create-pet"
+                style={{marginBottom: "3rem"}}
+              >
+                Update
+              </button>
+              <button 
+                onClick={() => handleDeletePetProfile(petData.id)}
+                className="button__create-pet"
+              >
                 Delete
               </button>
             </>
           )}
           {user?.role === "user" && (
+            
             <button
+              className="button__create-pet"
               onClick={() => handleAdoptPet(petData.id)}
               disabled={petData.availability.toLowerCase() !== "available"}
             >

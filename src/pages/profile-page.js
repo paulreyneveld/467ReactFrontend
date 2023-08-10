@@ -18,13 +18,6 @@ export const ProfilePage = () => {
         </h1>
         <div className="content__body">
           <p id="page-description">
-            <span>
-              You can use the <strong>ID Token</strong> to get the profile
-              information of an authenticated user.
-            </span>
-            <span>
-              <strong>Only authenticated users can access this page.</strong>
-            </span>
           </p>
           <div className="profile-grid">
             <div className="profile__header">
@@ -40,7 +33,7 @@ export const ProfilePage = () => {
             </div>
             <div className="profile__details">
               <CodeSnippet
-                title="Decoded ID Token"
+                title="Your Auth0 Account Info"
                 code={JSON.stringify(user, null, 2)}
               />
             </div>
