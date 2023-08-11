@@ -1,3 +1,6 @@
-.env
+.gcloudignore
 .DS_Store
+.env
+.env.production
 node_modules
+build
