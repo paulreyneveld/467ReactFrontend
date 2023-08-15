@@ -31,7 +31,7 @@ export const PetProfilePage = () => {
     const updatedPet = {
       availability: "not available",
     };
-    console.log(updatedPet);
+    // console.log(updatedPet);
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await updatePetResource(
       accessToken,
