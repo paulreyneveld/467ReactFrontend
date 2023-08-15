@@ -8,7 +8,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 export const PetsPage = () => {
 
   const [images, setImages] = useState([]);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({typeAnimal: "", breed: ""});
   const [breedOptions, setBreedOptions] = useState([{value: "", text: "All"}])
   const { user } = useAuth0();
 
