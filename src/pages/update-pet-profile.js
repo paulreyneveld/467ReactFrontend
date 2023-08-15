@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PageLayout } from "../components/page-layout";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -20,10 +20,56 @@ export const UpdatePetProfilePage = () => {
   const [leashedAllTimes, setLeashedAllTimes] = useState(petData.leashedAllTimes);
 
   const [imageFile, setImageFile] = useState("")
-  const inputFile = useRef(null);
+
+  let dogBreeds = [
+    {value: "german shepherd", text: "German Shepherd"},
+    {value: "golden retriever", text: "Golden Retriever"},
+    {value: "labrador", text: "Labrador"},
+    {value: "pit bull", text: "Pit Bull"},
+    {value: "french bulldog", text: "French Bulldog"},
+    {value: "rottweiler", text: "Rottweiler"},
+    {value: "beagle", text: "Beagle"},
+    {value: "dachsund", text: "Dachsund"},
+    {value: "boxer", text: "Boxer"},
+    {value: "yorkie", text: "Yorkie"},
+    {value: "poodle", text: "Poodle"},
+    {value: "mixed dog breed", text: "Mixed Dog Breed"},
+    {value: "other dog breed", text: "Other Dog Breed"},
+  ]
+
+  let catBreeds = [
+    {value: "siamese", text: "Siamese"},
+    {value: "persian", text: "Persian"},
+    {value: "maine coon", text: "Maine Coon"},
+    {value: "ragdoll", text: "Ragdoll"},
+    {value: "bengal", text: "Bengal"},
+    {value: "abyssinian", text: "Abyssinian"},
+    {value: "birman", text: "Birman"},
+    {value: "himalayan", text: "Himalayan"},
+    {value: "american shorthair", text: "American Shorthair"},
+    {value: "mixed cat breed", text: "Mixed Cat Breed"},
+    {value: "other cat breed", text: "Other Cat Breed"},
+  ]
+
+  const [breedOptions, setBreedOptions] = useState(() => {
+    if (typeAnimal === "dog") {
+      return dogBreeds;
+    }
+    else if (typeAnimal === "cat") {
+      return catBreeds;
+    }
+    else {
+      return [{value: "other", text: "Other"}];
+    };
+  });
 
   const updatePet = async (event) => {
     event.preventDefault();
+
+    if (!description) {
+      alert("Error: Please enter a description");
+      return;
+    }
 
     let formData = new FormData();
     formData.append("typeAnimal", typeAnimal);
@@ -38,33 +84,18 @@ export const UpdatePetProfilePage = () => {
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await updatePetResource(accessToken, petData.id, formData);
 
-    setTypeAnimal("dog");
-    setBreed("");
-    setDescription("");
-    setGoodWithAnimals(false);
-    setGoodWithChildren(false);
-    setLeashedAllTimes(false);
     setImageFile("");
 
-    // TODO: Error handling.
     if (data) {
-      console.log("data:", data);
+      // console.log("data:", data);
       alert("Pet updated successfully!");
       navigate("/petProfile", { state: data });
     }
 
     if (error) {
-      console.log("Error: " + error.message);
+      // console.log("Error: " + error.message);
       alert("Error: " + error.message);
     }
-  };
-
-  const handleTypeAnimalChange = (event) => {
-    setTypeAnimal(event.target.value);
-  };
-
-  const handleBreedChange = (event) => {
-    setBreed(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
@@ -88,8 +119,29 @@ export const UpdatePetProfilePage = () => {
     setImageFile(newImageFile)
   }
 
-  const handleCreateButton = () => {
-    inputFile.current.value = "";
+  const handleAnimalTypeChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setTypeAnimal(value);
+
+    if (value === "dog") {
+      setBreedOptions(dogBreeds)
+      setBreed("german shepherd")
+    }
+    else if (value === "cat") {
+      setBreedOptions(catBreeds)
+      setBreed("siamese")
+    }
+    else {
+      setBreedOptions([{value: "other", text: "Other"}])
+      setBreed("other")
+    }
+  };
+
+  const handleBreedChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setBreed(value);
   };
 
   return (
@@ -111,7 +163,7 @@ export const UpdatePetProfilePage = () => {
                 <br />
                 <select
                   defaultValue={typeAnimal}
-                  onChange={handleTypeAnimalChange}
+                  onChange={handleAnimalTypeChange}
                 >
                   <option value="dog">Dog</option>
                   <option value="cat">Cat</option>
@@ -121,11 +173,17 @@ export const UpdatePetProfilePage = () => {
             </div>
             <br />
             <div>
-              <label>
-                Breed:
-                <br />
-                <input defaultValue={breed} onChange={handleBreedChange} />
-              </label>
+            <label>Animal Breed:</label>
+            <br />
+            <select id="breed" name="breed" defaultValue={breed} onChange={handleBreedChange}>
+                  {breedOptions.map((option) => {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    )
+                  })}
+                </select><br></br> <br />
             </div>
             <br />
             <div>
@@ -145,7 +203,7 @@ export const UpdatePetProfilePage = () => {
               <label>
                 Pet Image (PNG, JPG, or JPEG):
                 <br />
-                <input type='file' name='file' ref={inputFile} onChange={handleFileChange} />
+                <input type='file' name='file' onChange={handleFileChange} />
               </label>
             </div>
             <br />
@@ -182,7 +240,7 @@ export const UpdatePetProfilePage = () => {
                 </label>
               </div>
             </div>
-            <button type="submit" className="button__create-pet" onClick={handleCreateButton}>
+            <button type="submit" className="button__create-pet">
               Save Changes
             </button>
           </form>
