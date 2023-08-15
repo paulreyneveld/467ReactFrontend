@@ -16,7 +16,7 @@ export const PetsPage = () => {
 
   let dogBreeds = [
     {value: "", text: "All"},
-    {value: "German shepherd", text: "German Shepherd"},
+    {value: "German Shepherd", text: "German Shepherd"},
     {value: "Golden Retriever", text: "Golden Retriever"},
     {value: "Labrador", text: "Labrador"},
     {value: "Pit Bull", text: "Pit Bull"},
@@ -27,7 +27,8 @@ export const PetsPage = () => {
     {value: "Boxer", text: "Boxer"},
     {value: "Yorkie", text: "Yorkie"},
     {value: "Poodle", text: "Poodle"},
-    {value: "Mixed Breed", text: "Mixed Breed"}
+    {value: "Mixed Dog Breed", text: "Mixed Dog Breed"},
+    {value: "Other Dog Breed", text: "Other Dog Breed"},
   ]
 
   let catBreeds = [
@@ -41,7 +42,8 @@ export const PetsPage = () => {
     {value: "Birman", text: "Birman"},
     {value: "Himalayan", text: "Himalayan"},
     {value: "American Shorthair", text: "American Shorthair"},
-    {value: "Mixed Breed", text: "Mixed Breed"}
+    {value: "Mixed Cat Breed", text: "Mixed Cat Breed"},
+    {value: "Other Cat Breed", text: "Other Cat Breed"},
   ]
 
   
@@ -87,8 +89,8 @@ export const PetsPage = () => {
     const { data, error } = await getPetsResource();
 
     let typeAnimal, breed, goodWithAnimals, goodWithChildren, leashedAllTimes, sortDate;
-    console.log(filters)
-    console.log(data)
+    // console.log(filters)
+    // console.log(data)
     let tempImages = [];
     if (data) {
 
@@ -147,7 +149,8 @@ export const PetsPage = () => {
     setImages(tempImages);
 
     if (error) {
-      console.log(error);
+      // console.log("Error: " + error.message);
+      alert("Error: " + error.message);
     }
   };
 
