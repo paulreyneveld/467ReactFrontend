@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageLayout } from "../components/page-layout";
 import { createPetResource } from "../services/message.service";
@@ -17,7 +17,6 @@ export const AddPetPage = () => {
   const [leashedAllTimes, setLeashedAllTimes] = useState(false);
 
   const [imageFile, setImageFile] = useState("")
-  const inputFile = useRef(null);
 
   let dogBreeds = [
     {value: "German Shepherd", text: "German Shepherd"},
@@ -67,14 +66,6 @@ export const AddPetPage = () => {
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await createPetResource(accessToken, formData);
 
-    setTypeAnimal("dog");
-    setBreed("");
-    setDescription("");
-    setGoodWithAnimals(false);
-    setGoodWithChildren(false);
-    setLeashedAllTimes(false);
-    setImageFile("");
-
     if (data) {
       // console.log("data:", data);
       alert("Pet added successfully!");
@@ -107,10 +98,6 @@ export const AddPetPage = () => {
     const newImageFile = event.target.files[0]
     setImageFile(newImageFile)
   }
-
-  const handleCreateButton = () => {
-    inputFile.current.value = "";
-  };
 
   const handleAnimalTypeChange = (event) => {
     const name = event.target.name;
@@ -191,7 +178,7 @@ export const AddPetPage = () => {
               <label>
                 Pet Image (PNG, JPG, or JPEG):
                 <br />
-                <input type='file' name='file' ref={inputFile} onChange={handleFileChange} />
+                <input type='file' name='file' onChange={handleFileChange} />
               </label>
             </div>
             <br />
@@ -228,7 +215,7 @@ export const AddPetPage = () => {
                 </label>
               </div>
             </div>
-            <button type="submit" className="button__create-pet" onClick={handleCreateButton}>
+            <button type="submit" className="button__create-pet">
               Create
             </button>
           </form>
